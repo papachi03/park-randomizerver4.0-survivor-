@@ -29,10 +29,7 @@
   box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
   background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
-
-  /* ゆらゆらアニメーション追加 */
-  animation: flicker 3s infinite ease-in-out;
-}
+ }
     
     .perk-name {
       font-weight: bold;
@@ -69,7 +66,7 @@
 <!-- ストップ音 -->
 <audio id="stopSound" src="SE2.mp3"></audio>  <div>
 
-<h1>DBD Park Randomizer ver3.0(survivor)</h1>
+<h1>DBD Park Randomizer ver4.0(survivor)</h1>
 
     <button onclick="startShuffle()">スタート</button>
     <button onclick="stopShuffle()">ストップ</button>
@@ -890,6 +887,102 @@
     icon: "Perks/Gelato/T_UI_iconsPerks_ShoulderTheBurden.png"
   },
 
+
+/*ここから追加*/
+    name: "害をなすなかれ",
+    description: "別の生存者を治療するとき、その生存者のフック段階1つにつき、治療速度が(30・40・50)%上昇し、スキルチェックでグレイトを出すと治療が3%進行する。",
+    icon: "Perks/Orela Rose/T_UI_iconsPerks_DoNoHarm.png"
+  },
+
+    name: "救助義務",
+    description: "無傷状態で味方の代わりに攻撃を受けると、12メートル以内にいる他の生存者全員が25%の迅速を(4・5・6)秒間得る。",
+    icon: "Perks/Orela Rose/T_UI_iconsPerks_DutyOfCare.png"
+  },
+
+    name: "迅速な対応",
+    description: "・ロッカーから駆け出すと、疲労のステータス効果に(30・25・20)秒間苦しむ。疲労の効果を得ると、殺人鬼のオーラが2秒間視える。
+・疲労状態になると生存者は疲労を引き起こす他のパークが使用不可になる。",
+    icon: "Perks/Orela Rose/T_UI_iconsPerks_RapidResponse.png"
+  },
+
+    name: "終末世界の知恵",
+    description: "2個のチェストを開錠するか漁ったあとに、破壊されたパレットの隣でアビリティの発動ボタン1を4秒間押すと、もろいパレットを作る。（24・28・32）メートル以内にある破壊されたパレットのオーラが視える。
+もろいパレットは倒されると壊れる。",
+    icon: "Perks/Rick Grimes/T_UI_iconPerks_ApocalypticIngenuity.png"
+  },
+
+    name: "捕まえてみろ！",
+    description: "他の生存者をフックから救出したあと、しゃがんで静止している状態でアビリティの発動ボタン1を押すと、24メートル以内の負傷または瀕死状態の生存者が（10・12.5・15）秒間赤い傷マークと血痕を残さず、痛みによるうめき声を出さなくなる。あなたは叫び声を上げ、5秒間あなたのオーラが殺人鬼に視える。",
+    icon: "Perks/Rick Grimes/T_UI_iconPerks_ComeAndGetMe.png"
+  },
+
+    name: "チームワーク：強化",
+    description: "あなたが負傷中に別の生存者が24メートル以内で殺人鬼をバレットで怯ませるか、目眩ましすると、（20・25・30）秒間、あなたのうめき声、赤い傷マーク、血痕が100%減少する。",
+    icon: "Perks/Rick Grimes/T_UI_iconPerks_TeamworkToughenUp.png"
+  },
+
+    name: "信念",
+    description: "他の生存者1人を治療したあと、瀕死状態で25%以上回復したときにアビリティの発動ボタン2を押すと、即座に回復して立ち上がる。その際、衰弱を得て、（20・25・30）秒後に再び瀕死状態になる。",
+    icon: "Perks/Michonne Grimes/T_UI_iconPerks_Conviction.png"
+  },
+
+    name: "最後の抵抗",
+    description: "追跡されずに殺人鬼の脅威範囲内に（120・105・90）秒間いたあと、高速乗り越えを行うと、2.5メートル以内にいる殺人鬼を3秒間怯ませる。その後、このパークは儀式が終了するまで無効になる。",
+    icon: "Perks/Michonne Grimes/T_UI_iconPerks_LastStand.png"
+  },
+
+    name: "チームワーク：挑戦",
+    description: "殺人鬼をパレットで怯ませるか、目眩ましすると、24メートル以内の負傷した他の生存者が（6・8・10）秒間、我慢を得て殺人鬼のオーラを視ることができる。",
+    icon: "Perks/Michonne Grimes/T_UI_iconPerks_TeamworkThrowDown.png"
+  },
+
+    name: "路上生活",
+    description: "フックに吊るされた生存者の前でアビリティ発動ボタンを押すと、その生存者のフックカウントを1つ減らし、自身のフックカウントを1つ増やす。発動後、40秒間無防備のステータス効果を受ける。",
+    icon: "Perks/Vee Boonyasak/T_UI_iconPerks_RoadLife.png"
+  },
+
+    name: "ワンツースリーフォー！",
+    description: "フックに吊るされた生存者の前でアビリティ発動ボタンを押すと、その生存者のフックカウントを1つ減らし、自身のフックカウントを1つ増やす。発動後、40秒間無防備のステータス効果を受ける。",
+    icon: "Perks/Vee Boonyasak/T_UI_iconPerks_OneTwoThreeFour.png"
+  },
+
+    name: "ゴーストノート",
+    description: "フックに吊るされた生存者の前でアビリティ発動ボタンを押すと、その生存者のフックカウントを1つ減らし、自身のフックカウントを1つ増やす。発動後、40秒間無防備のステータス効果を受ける。",
+    icon: "Perks/Vee Boonyasak/T_UI_iconPerks_GhostNotes.png"
+  },
+
+    name: "ジャ・ジャ・ジャ・ジャーン",
+    description: "フックに吊るされた生存者の前でアビリティ発動ボタンを押すと、その生存者のフックカウントを1つ減らし、自身のフックカウントを1つ増やす。発動後、40秒間無防備のステータス効果を受ける。",
+    icon: "Perks/Dustin Henderson/T_UI_iconsPerks_BadaBadaBoom.png"
+  },
+
+    name: "作戦変更",
+    description: "フックに吊るされた生存者の前でアビリティ発動ボタンを押すと、その生存者のフックカウントを1つ減らし、自身のフックカウントを1つ増やす。発動後、40秒間無防備のステータス効果を受ける。",
+    icon: "Perks/Dustin Henderson/T_UI_iconsPerks_ChangeOfPlan.png"
+  },
+
+    name: "チームワーク：つながった回路",
+    description: "フックに吊るされた生存者の前でアビリティ発動ボタンを押すと、その生存者のフックカウントを1つ減らし、自身のフックカウントを1つ増やす。発動後、40秒間無防備のステータス効果を受ける。",
+    icon: "Perks/Dustin Henderson/T_UI_iconsPerks_TeamworkFullCircuit.png"
+  },
+
+    name: "ESP",
+    description: "4秒間しゃがむと、自分の近くから44メートル先まで徐々に生存者、殺人鬼、様々な物体のオーラが視えるようになる。自分が忍びと無感覚状態になる。しゃがむのを止めるか11秒間経過すると、このパークの全ての効果が終了し、（60・50・40）秒間のクールダウンに入る。",
+    icon: "Perks/Eleven/T_UI_iconsPerks_ExtrasensoryPerception (2).png"
+  },
+
+    name: "みんなに見える",
+    description: "殺人鬼があなたのオーラを表示させたとき、1個のトークンを得る。トークンが4個貯まると、それが全て消費され、自分と他の生存者全員に殺人鬼のオーラが（10・12.5・15）秒間表示される。このパークには10秒間のクールダウンがある。",
+    icon: "Perks/Eleven/T_UI_iconsPerks_WeSeeYou.png"
+  },
+
+    name: "チームワーク：小さな声",
+    description: "自分と一緒に発電機を修理している生存者1人につき、発電機の修理音が聞こえる範囲が（15・20・25）%縮小する。1人以上の他の生存者と一緒に修理をしている間、修理の速度が5%上昇する。",
+    icon: "Perks/Eleven/T_UI_iconsPerks_TeamworkSoftSpoken.png"
+  },
+
+
+/*ここから一般*/
   {
     name: "パークなし",
     description: "ホッホッホ､はずれじゃよ。",
