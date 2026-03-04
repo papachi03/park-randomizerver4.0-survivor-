@@ -45,6 +45,22 @@
       cursor: pointer;
     }
 
+.creator{
+  font-size:12px;
+  margin-top:5px;
+  opacity:0.85;
+}
+
+.creator a{
+  color:#9be3ff;
+  text-decoration:none;
+}
+
+.creator a:hover{
+  text-decoration:underline;
+}
+
+
     /* 結果欄 */
     .result-area {
       margin-top: 30px;
@@ -110,9 +126,16 @@
 <audio id="stopSound" src="SE2.mp3"></audio>  <div>
 
 <h1>DBD Park Randomizer ver1.0(killer)</h1>
+<div class="creator">
+  Created by
+  <a href="https://www.twitch.tv/papasan03" target="_blank">
+    papasan03 (Twitch)
+  </a>
+</div>
 
     <button onclick="startShuffle()">スタート</button>
     <button onclick="stopShuffle()">ストップ</button>
+    <button onclick="location.href='index.html'">サバイバー用に変更</button>
   </div>
 
   <div class="killer-area">

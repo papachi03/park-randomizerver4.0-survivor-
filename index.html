@@ -44,6 +44,20 @@
       margin: 10px;
       cursor: pointer;
     }
+.creator{
+  font-size:12px;
+  margin-top:5px;
+  opacity:0.85;
+}
+
+.creator a{
+  color:#9be3ff;
+  text-decoration:none;
+}
+
+.creator a:hover{
+  text-decoration:underline;
+}
 
     /* 結果欄 */
     .result-area {
@@ -81,8 +95,16 @@
 
 <h1>DBD Park Randomizer ver4.0(survivor)</h1>
 
+<div class="creator">
+  Created by
+  <a href="https://www.twitch.tv/papasan03" target="_blank">
+    papasan03 (Twitch)
+  </a>
+</div>
+
     <button onclick="startShuffle()">スタート</button>
     <button onclick="stopShuffle()">ストップ</button>
+    <button onclick="location.href='index_kpark.html'">キラー用に変更</button>
   </div>
  <div class="perk-container" id="perkContainer"></div>
 <div class="result-area">
