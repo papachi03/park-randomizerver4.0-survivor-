@@ -15,37 +15,89 @@
       color: #fff;
       text-shadow: 1px 1px 2px #000;
     }
-    .perk-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 30px;
-    }
-    .perk {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 10px;
-      margin: 10px;
-      width: 200px;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-      background-color: rgba(0, 0, 0, 0.6);
-      color: #fff;
-    }
-    .perk-name {
-      font-weight: bold;
-      margin: 10px 0 5px;
-    }
-    .perk-desc {
-      font-size: 14px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      margin: 10px;
-      cursor: pointer;
-    }
+.perk-container{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  gap:14px;
+align-items:flex-start; /* ←これを追加 */
+}
 
-.creator{
+.perk{
+  width:220px;
+  height:190px;
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:12px;
+  padding:12px;
+  margin:6px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.35);
+  background-color:rgba(0,0,0,0.72);
+  color:#fff;
+  box-sizing:border-box;
+  display:grid;
+  grid-template-rows:96px 52px auto;
+  justify-items:center;
+  align-items:start;
+  overflow:hidden;
+  min-height:0;
+  cursor:pointer;
+  transition:height 0.22s ease, transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.perk img{
+  width:96px;
+  height:96px;
+  object-fit:contain;
+  margin-bottom:10px;
+}
+
+.perk-name{
+  width:100%;
+  font-size:18px;
+  font-weight:bold;
+  line-height:1.35;
+  text-align:center;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.perk-desc{
+  width:100%;
+  font-size:14px;
+  line-height:1.5;
+  text-align:left;
+  margin-top:8px;
+  max-height:0;
+  opacity:0;
+  overflow-y:auto;
+  padding-right:4px;
+  transition:max-height 0.22s ease, opacity 0.18s ease;
+  min-height:0;
+}
+
+/* 停止後に開いたカード */
+.perk.expanded{
+  height:360px;
+}
+
+.perk.expanded .perk-desc{
+  max-height:140px;
+  opacity:1;
+}
+
+/* シャッフル中は説明を完全に隠す */
+.perk-container.spinning .perk{
+  height:190px;
+}
+
+.perk-container.spinning .perk .perk-desc{
+  max-height:0 !important;
+  opacity:0 !important;
+  overflow:hidden;
+}.creator{
   font-size:12px;
   margin-top:5px;
   opacity:0.85;
@@ -59,7 +111,24 @@
 .creator a:hover{
   text-decoration:underline;
 }
+/* スクロールバーを細く */
+.perk-desc::-webkit-scrollbar{
+  width:6px;
+}
+.perk-desc::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.25);
+  border-radius:999px;
+}
 
+/* シャッフル中は説明を隠す */
+.perk-container.spinning .perk{
+  height:190px;
+  grid-template-rows:96px 52px 0fr;
+}
+
+.perk-container.spinning .perk-desc{
+  display:none;
+}
 
     /* 結果欄 */
     .result-area {
@@ -108,8 +177,303 @@
       border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.12);
     }
+.mode-switch{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:10px 0 20px;
+  flex-wrap:wrap;
+}
 
-  </style>
+.mode-btn{
+  padding:10px 18px;
+  font-size:16px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+}
+
+.mode-btn.active{
+  background:rgba(255,255,255,0.35);
+  font-weight:bold;
+}
+
+.control-area{
+  margin-top:18px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.control-btn{
+  padding:12px 22px;
+  font-size:18px;
+  margin:6px;
+  cursor:pointer;
+  border:none;
+  border-radius:10px;
+  background:rgba(0,0,0,0.55);
+  color:#fff;
+  box-shadow:0 4px 10px rgba(0,0,0,0.25);
+}
+
+.control-btn:hover{
+  background:rgba(255,255,255,0.15);
+}
+
+.status-badge{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(0,0,0,0.45);
+  border:1px solid rgba(255,255,255,0.15);
+  font-size:13px;
+}
+
+.history-area{
+  margin-top:24px;
+}
+
+.history-title{
+  font-size:16px;
+  margin-bottom:10px;
+}
+
+.history-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:center;
+}
+
+.history-item{
+  width:min(920px, 92vw);
+  background:rgba(0,0,0,0.45);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:14px;
+  text-align:left;
+}
+
+.perk img{
+  width:96px;
+  height:96px;
+  object-fit:contain;
+  margin-bottom:12px;
+}
+
+@media (max-width: 768px){
+  body{
+    padding:20px 12px;
+  }
+
+  .control-btn,
+  .mode-btn{
+    width:100%;
+    max-width:360px;
+  }
+
+  .perk{
+    width:min(92vw, 360px);
+  }
+}
+.perk{
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.perk.locked{
+  transform: scale(1.03);
+  border-color: rgba(255,255,255,0.5);
+  box-shadow:
+    0 0 14px rgba(255,255,255,0.12),
+    0 0 28px rgba(255,255,255,0.08);
+}
+
+.perk.slot-spin{
+  animation: slotPulse 0.18s linear infinite alternate;
+}
+
+@keyframes slotPulse{
+  from{
+    transform: translateY(-3px) scale(0.995);
+    filter: brightness(0.96);
+  }
+  to{
+    transform: translateY(3px) scale(1.005);
+    filter: brightness(1.05);
+  }
+}
+
+.perk.special-glow{
+  animation: specialGlow 0.9s ease-in-out infinite alternate;
+  border-color: rgba(255,215,0,0.9);
+  box-shadow:
+    0 0 14px rgba(255,215,0,0.75),
+    0 0 28px rgba(255,140,0,0.45),
+    0 0 48px rgba(255,80,0,0.25);
+}
+
+@keyframes specialGlow{
+  from{
+    transform: scale(1.02);
+    filter: brightness(1);
+  }
+  to{
+    transform: scale(1.06);
+    filter: brightness(1.25);
+  }
+}
+
+/* 特殊枠が出たとき画面全体を一瞬光らせる */
+.screen-flash{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle at center,
+      rgba(255,230,120,0.30) 0%,
+      rgba(255,140,0,0.16) 35%,
+      rgba(255,60,0,0.08) 60%,
+      rgba(0,0,0,0) 100%);
+  transition: opacity 0.12s ease;
+  z-index: 9999;
+}
+
+.screen-flash.show{
+  opacity: 1;
+}
+.killer-filter-area{
+  margin: 16px auto 8px;
+  max-width: 980px;
+}
+
+.killer-filter-panel{
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.killer-filter-panel.hidden{
+  display: none;
+}
+
+.killer-filter-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+
+.killer-filter-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.killer-checkbox-list{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap:8px 12px;
+  text-align:left;
+}
+
+.killer-checkbox-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.killer-checkbox-item input{
+  transform: scale(1.1);
+}
+
+.small-btn{
+  padding: 8px 12px;
+  font-size: 14px;
+}
+.title-bar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+}
+
+.title-bar h1{
+  margin:0;
+}
+
+.title-sound-controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.mini-sound-btn{
+  padding:8px 12px;
+  font-size:13px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  background:rgba(0,0,0,0.55);
+  color:#fff;
+  box-shadow:0 4px 10px rgba(0,0,0,0.25);
+}
+
+.mini-sound-btn:hover{
+  background:rgba(255,255,255,0.15);
+}
+.result-row{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:16px;
+  margin-top:30px;
+  flex-wrap:wrap;
+}
+
+.killer-card{
+  width:220px;
+  height:190px;
+  padding:0;
+  border:none;
+  background:none;
+  box-shadow:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.killer-card img{
+  width:96px;
+  height:120px;
+  object-fit:contain;
+  margin-bottom:8px;
+}
+
+.killer-card div{
+  font-size:16px;
+  font-weight:bold;
+}
+</style>
 </head>
 
 <body>
@@ -125,7 +489,19 @@
 <!-- ストップ音 -->
 <audio id="stopSound" src="SE2.mp3"></audio>  <div>
 
-<h1>DBD Park Randomizer ver1.0(killer)</h1>
+<div class="title-bar">
+  <h1>DBD Park Randomizer ver5.0</h1>
+
+  <div class="title-sound-controls">
+    <button class="mini-sound-btn" onclick="toggleBgm()" id="bgmBtn">🎵 BGM ON</button>
+    <button class="mini-sound-btn" onclick="toggleSe()" id="seBtn">🔔 SE ON</button>
+  </div>
+</div>
+
+<div class="mode-switch">
+  <button class="mode-btn" onclick="goToSurvivorPage()">サバイバー用</button>
+</div>
+
 <div class="creator">
   Created by
   <a href="https://www.twitch.tv/papasan03" target="_blank">
@@ -133,20 +509,51 @@
   </a>
 </div>
 
-    <button onclick="startShuffle()">スタート</button>
-    <button onclick="stopShuffle()">ストップ</button>
-    <button onclick="location.href='index.html'">サバイバー用に変更</button>
+<div class="status-badge" id="shuffleStatus">待機中</div>
+
+<div class="control-area">
+  <button class="control-btn" onclick="startShuffle()">スタート</button>
+  <button class="control-btn" onclick="stopShuffle()">ストップ</button>
+</div>
+
+<div class="killer-filter-area">
+  <button class="control-btn" type="button" onclick="toggleKillerFilter()">
+    所持キラー設定
+  </button>
+
+  <div id="killerFilterPanel" class="killer-filter-panel hidden">
+    <div class="killer-filter-header">
+      <strong>ランダム対象キラー</strong>
+      <div class="killer-filter-actions">
+        <button class="control-btn small-btn" type="button" onclick="selectAllKillers()">全選択</button>
+        <button class="control-btn small-btn" type="button" onclick="clearAllKillers()">全解除</button>
+      </div>
+    </div>
+
+    <div id="killerCheckboxList" class="killer-checkbox-list"></div>
+  </div>
+</div>
+
+
+<div class="result-row">
+
+  <div class="killer-card">
+    <img id="killerIcon">
+    <div id="killerName"></div>
   </div>
 
-  <div class="killer-area">
-    <img id="killerIcon" src="" alt="killer icon">
-    <div id="killerName" class="killer-name"></div>
-  </div>
+  <div class="perk-container" id="perkContainer"></div>
+
+</div>
 
  <div class="perk-container" id="perkContainer"></div>
 <div class="result-area">
   <input id="resultText" type="text" readonly placeholder="ストップするとここに4つのパーク名が出ます">
-  <button onclick="copyResult()">コピー</button>
+  <button class="control-btn" onclick="copyResult()">コピー</button>
+</div>
+<div class="history-area">
+  <div class="history-title">履歴（最新3件）</div>
+  <div id="historyList" class="history-list"></div>
 </div>
 
   <script>
@@ -245,8 +652,43 @@
       "TheKrasue": "ガスー",
       "TheFirst": "ザ・ファースト"
     };
+const KILLER_STORAGE_KEY = "dbd_owned_killers_v1";
+
+function getAllKillers() {
+  return killerFiles.map(file => {
+    const code = parseKillerCode(file);
+    const name = killerNameJP[code] ?? code;
+    return { file, code, name, icon: "killer/" + file };
+  });
+}
+
+function loadOwnedKillers() {
+  const saved = localStorage.getItem(KILLER_STORAGE_KEY);
+  if (!saved) {
+    return new Set(killerFiles); // 初回は全キラー所持扱い
+  }
+
+  try {
+    const parsed = JSON.parse(saved);
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      return new Set(parsed);
+    }
+  } catch (e) {}
+
+  return new Set(killerFiles);
+}
+
+function saveOwnedKillers(set) {
+  localStorage.setItem(KILLER_STORAGE_KEY, JSON.stringify([...set]));
+}
+
+let ownedKillers = loadOwnedKillers();
+
 
     let currentKiller = null;
+    let bgmEnabled = true;
+    let seEnabled = true;
+    let resultHistory = [];
 
     function parseKillerCode(file){
       // "K01_TheTrapper_Portrait.png" -> "TheTrapper"
@@ -256,13 +698,125 @@
         .replace(/^T_UI_K\d+_/,"")
         .replace(/^K\d+_/,"");
     }
+    function getAvailableKillers() {
+  const allKillers = getAllKillers();
+  const filtered = allKillers.filter(killer => ownedKillers.has(killer.file));
+  return filtered.length > 0 ? filtered : allKillers;
+}
+function renderKillerCheckboxes() {
+  const list = document.getElementById("killerCheckboxList");
+  if (!list) return;
 
-    function pickRandomKiller(){
-      const file = killerFiles[Math.floor(Math.random()*killerFiles.length)];
-      const code = parseKillerCode(file);
-      const name = killerNameJP[code] ?? code; // fallback英語
-      return { file, code, name, icon: "killer/" + file };
-    }
+  list.innerHTML = "";
+
+  const allKillers = getAllKillers();
+
+  allKillers.forEach(killer => {
+    const label = document.createElement("label");
+    label.className = "killer-checkbox-item";
+
+    const checked = ownedKillers.has(killer.file) ? "checked" : "";
+
+    label.innerHTML = `
+      <input type="checkbox" data-file="${killer.file}" ${checked}>
+      <span>${killer.name}</span>
+    `;
+
+    const checkbox = label.querySelector("input");
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        ownedKillers.add(killer.file);
+      } else {
+        ownedKillers.delete(killer.file);
+      }
+
+      // 全解除で0件になると困るので、0件なら全部戻す
+
+      saveOwnedKillers(ownedKillers);
+    });
+
+    list.appendChild(label);
+  });
+}
+
+function toggleKillerFilter() {
+  const panel = document.getElementById("killerFilterPanel");
+  if (!panel) return;
+  panel.classList.toggle("hidden");
+}
+
+function selectAllKillers() {
+  ownedKillers = new Set(killerFiles);
+  saveOwnedKillers(ownedKillers);
+  renderKillerCheckboxes();
+}
+
+function pickRandomKiller() {
+  const available = getAvailableKillers();
+
+  if (available.length === 0) {
+    alert("ランダム対象キラーが選択されていません。");
+    return getAllKillers()[0];
+  }
+
+  return available[Math.floor(Math.random() * available.length)];
+}
+
+function clearAllKillers() {
+  ownedKillers = new Set();
+  saveOwnedKillers(ownedKillers);
+  renderKillerCheckboxes();
+}  
+function setStatus(text) {
+  const el = document.getElementById("shuffleStatus");
+  if (el) el.textContent = text;
+}
+
+function updateHistory(text) {
+  if (!text) return;
+
+  resultHistory.unshift(text);
+  resultHistory = resultHistory.slice(0, 3);
+
+  const historyList = document.getElementById("historyList");
+  if (!historyList) return;
+
+  historyList.innerHTML = "";
+
+  resultHistory.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "history-item";
+    div.textContent = item;
+    historyList.appendChild(div);
+  });
+}
+
+function toggleBgm() {
+  bgmEnabled = !bgmEnabled;
+  const btn = document.getElementById("bgmBtn");
+  if (btn) btn.textContent = bgmEnabled ? "🎵 BGM ON" : "🎵 BGM OFF";
+
+  if (!bgmEnabled) {
+    fireSound?.pause();
+    bgmSound?.pause();
+  } else {
+    fireSound?.play().catch(() => {});
+    bgmSound?.play().catch(() => {});
+  }
+}
+
+function toggleSe() {
+  seEnabled = !seEnabled;
+  const btn = document.getElementById("seBtn");
+  if (btn) btn.textContent = seEnabled ? "🔔 SE ON" : "🔔 SE OFF";
+
+  if (!seEnabled) {
+    startSound?.pause();
+    stopSound?.pause();
+    if (startSound) startSound.currentTime = 0;
+    if (stopSound) stopSound.currentTime = 0;
+  }
+}
 
 
     // 任意のサバイバーパークの例（もっと増やしてOK）
@@ -1000,82 +1554,200 @@
     let shuffleInterval = null;
     let killerShuffleInterval = null;
     let isShuffling = false;
+    let isStopping = false;
 
     function getRandomParks() {
       const shuffled = [...allParks].sort(() => 0.5 - Math.random());
       return shuffled.slice(0, 4);
     }
 
-    function renderParks(parks) {
-      const container = document.getElementById('perkContainer');
-      container.innerHTML = '';
-      parks.forEach(park => {
-        const div = document.createElement('div');
-        div.className = 'perk';
-        div.innerHTML = `
-          <img src="${park.icon}" alt="${park.name}" style="width:96px;height:96px;margin-bottom:12px;">
-          <div class="perk-name">${park.name}</div>
-          <div class="perk-desc">${park.description}</div>
-        `;
-        container.appendChild(div);
+function updateKillerDisplay(killer) {
+  const killerIconEl = document.getElementById("killerIcon");
+  const killerNameEl = document.getElementById("killerName");
+
+  if (killerIconEl) killerIconEl.src = killer.icon;
+  if (killerNameEl) killerNameEl.textContent = killer.name;
+}
+
+function renderParks(parks, lockedCount = 0, spinning = false) {
+  const container = document.getElementById("perkContainer");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (spinning) {
+    container.classList.add("spinning");
+  } else {
+    container.classList.remove("spinning");
+  }
+
+  parks.forEach((park, index) => {
+    const div = document.createElement("div");
+    div.className = "perk";
+
+    if (index < lockedCount) {
+      div.classList.add("locked");
+    } else if (spinning) {
+      div.classList.add("slot-spin");
+    }
+
+    if (isSpecialPerk(park)) {
+      div.classList.add("special-glow");
+    }
+
+    div.innerHTML = `
+      <img src="${park.icon}" alt="${park.name}">
+      <div class="perk-name">${park.name}</div>
+      <div class="perk-desc">${park.description}</div>
+    `;
+
+    // 停止後だけクリックで説明開閉
+    if (!spinning) {
+      div.addEventListener("click", () => {
+        const allCards = container.querySelectorAll(".perk");
+        allCards.forEach(card => {
+          if (card !== div) card.classList.remove("expanded");
+        });
+        div.classList.toggle("expanded");
       });
     }
 
+    container.appendChild(div);
+  });
+}
+
+setStatus("シャッフル中…");
+if (seEnabled && startSound) {
+  startSound.currentTime = 0;
+  startSound.play().catch(() => {});
+}
+
     function startShuffle() {
-      // すでに回ってるなら何もしない
-      if (isShuffling) return;
-      isShuffling = true;
+  if (isShuffling || isStopping) return;
 
-      // キラーもスロットっぽくシャッフル（ストップで確定）
-      const killerIconEl = document.getElementById("killerIcon");
-      const killerNameEl = document.getElementById("killerName");
+  isShuffling = true;
+  setStatus("シャッフル中…");
 
-      const tickKiller = () => {
-        currentKiller = pickRandomKiller();
-        if (killerIconEl) killerIconEl.src = currentKiller.icon;
-        if (killerNameEl) killerNameEl.textContent = currentKiller.name;
-      };
-      tickKiller(); // すぐ1回表示
-      killerShuffleInterval = setInterval(tickKiller, 80);
+  if (seEnabled && startSound) {
+    startSound.pause();
+    startSound.currentTime = 0;
+    startSound.play().catch(() => {});
+  }
 
+  const tickKiller = () => {
+    currentKiller = pickRandomKiller();
+    updateKillerDisplay(currentKiller);
+  };
 
-      if (startSound) {
-        startSound.currentTime = 0;
-        startSound.play().catch(() => {});
-      }
+  tickKiller();
+  killerShuffleInterval = setInterval(tickKiller, 75);
 
-      shuffleInterval = setInterval(() => {
-        const parks = getRandomParks();
-        renderParks(parks);
-      }, 100);
-    }
+  shuffleInterval = setInterval(() => {
+    const parks = getRandomParks();
+    renderParks(parks, 0, true);
+  }, 90);
+}
+
+const SPECIAL_PERK_NAMES = ["パークなし", "パーク自由"];
+
+function isSpecialPerk(park) {
+  const name = (park.name || "").trim();
+  return SPECIAL_PERK_NAMES.includes(name);
+}
+
+function triggerSpecialFlash() {
+  const flash = document.getElementById("screenFlash");
+  if (!flash) return;
+
+  flash.classList.add("show");
+  setTimeout(() => flash.classList.remove("show"), 180);
+  setTimeout(() => flash.classList.add("show"), 260);
+  setTimeout(() => flash.classList.remove("show"), 420);
+}
 
     // ★ここが「結果欄に 〇〇、〇〇、〇〇、〇〇 を出す」対応版
-    function stopShuffle() {
-      if (!isShuffling) return;
+async function stopShuffle() {
+  if (!isShuffling || isStopping) return;
 
-      clearInterval(shuffleInterval);
-      shuffleInterval = null;
+  isStopping = true;
+  setStatus("停止演出中…");
 
-      if (killerShuffleInterval) {
-        clearInterval(killerShuffleInterval);
-        killerShuffleInterval = null;
+  if (shuffleInterval) {
+    clearInterval(shuffleInterval);
+    shuffleInterval = null;
+  }
+
+  if (killerShuffleInterval) {
+    clearInterval(killerShuffleInterval);
+    killerShuffleInterval = null;
+  }
+
+  currentKiller = pickRandomKiller();
+  updateKillerDisplay(currentKiller);
+
+  const finalParks = getRandomParks();
+
+  // 約1.8秒で左から順に停止
+  const phaseDurations = [300, 400, 500, 600];
+  let lockedCount = 0;
+
+  for (let i = 0; i < 4; i++) {
+    const duration = phaseDurations[i];
+    const startTime = performance.now();
+
+    while (performance.now() - startTime < duration) {
+      const temp = [...finalParks];
+
+      for (let j = lockedCount; j < 4; j++) {
+        temp[j] = allParks[Math.floor(Math.random() * allParks.length)];
       }
-      isShuffling = false;
 
-      if (stopSound) {
-        stopSound.currentTime = 0;
-        stopSound.play().catch(() => {});
-      }
+      renderParks(temp, lockedCount, true);
 
-      // 表示中の4パーク名を取得して結果欄へ
-      const perkNames = Array.from(document.querySelectorAll(".perk-name"))
-        .map(el => el.textContent.trim())
-        .filter(Boolean);
+      const elapsed = performance.now() - startTime;
+      const progress = elapsed / duration;
+      const delay = 40 + Math.floor(progress * 135);
 
-      document.getElementById("resultText").value = `使用するキラー：${currentKiller?.name ?? "不明"}、指定パーク：${perkNames.join("、")}`;
+      await new Promise(resolve => setTimeout(resolve, delay));
     }
 
+    lockedCount++;
+    renderParks(finalParks, lockedCount, true);
+
+    // 1枠止まるごとに小さく区切り感
+    await new Promise(resolve => setTimeout(resolve, 70));
+  }
+
+  renderParks(finalParks, 4, false);
+
+  if (startSound) {
+    startSound.pause();
+    startSound.currentTime = 0;
+  }
+
+  if (seEnabled && stopSound) {
+    stopSound.pause();
+    stopSound.currentTime = 0;
+    stopSound.play().catch(() => {});
+  }
+
+  const hasSpecial = finalParks.some(park => isSpecialPerk(park));
+  if (hasSpecial) {
+    triggerSpecialFlash();
+  }
+
+  const perkNames = finalParks.map(park => park.name);
+  const resultText = `使用キラー：${currentKiller.name} ／ 指定パーク：${perkNames.join("、")}`;
+
+  const resultInput = document.getElementById("resultText");
+  if (resultInput) resultInput.value = resultText;
+
+  updateHistory(resultText);
+  setStatus("停止済み");
+
+  isShuffling = false;
+  isStopping = false;
+}
     // ★コピー関数
     function copyResult() {
       const input = document.getElementById("resultText");
@@ -1096,22 +1768,48 @@
       input.blur();
     }
 
-    // ===== 音量 + 自動再生制限対策 =====
-    window.addEventListener('DOMContentLoaded', () => {
-      if (fireSound)  fireSound.volume = 0.05;
-      if (bgmSound)   bgmSound.volume  = 0.05;
-      if (startSound) startSound.volume = 0.1;
-      if (stopSound)  stopSound.volume  = 0.1;
+function goToKillerPage() {
+  sessionStorage.setItem("dbd_page_switching", "1");
+  location.href = "index_kpark.html";
+}
 
-      // 最初のユーザー操作で再生
-      const playAudio = () => {
-        fireSound?.play().catch(() => {});
-        bgmSound?.play().catch(() => {});
-        document.removeEventListener('click', playAudio);
-      };
-      document.addEventListener('click', playAudio);
-    });
-  
+function goToSurvivorPage() {
+  sessionStorage.setItem("dbd_page_switching", "1");
+  location.href = "index.html";
+}
+
+function stopAllSounds() {
+  [fireSound, bgmSound, startSound, stopSound].forEach(audio => {
+    if (!audio) return;
+    audio.pause();
+    audio.currentTime = 0;
+  });
+}
+    // ===== 音量 + 自動再生制限対策 =====
+window.addEventListener("DOMContentLoaded", () => {
+  const suppressAutoClick = sessionStorage.getItem("dbd_page_switching") === "1";
+  sessionStorage.removeItem("dbd_page_switching");
+
+  stopAllSounds();
+
+  if (fireSound)  fireSound.volume = 0.05;
+  if (bgmSound)   bgmSound.volume  = 0.05;
+  if (startSound) startSound.volume = 0.1;
+  if (stopSound)  stopSound.volume  = 0.1;
+
+  setStatus("待機中");
+
+renderKillerCheckboxes();
+
+  const playAudio = () => {
+    fireSound?.play().catch(() => {});
+    bgmSound?.play().catch(() => {});
+    document.removeEventListener("click", playAudio);
+  };
+
+  document.addEventListener("click", playAudio);
+
+});  
     // 初期表示（何も押してない時の見た目用）
     (function initKiller(){
       currentKiller = pickRandomKiller();
@@ -1122,5 +1820,6 @@
     })();
 
 </script>
+<div id="screenFlash" class="screen-flash"></div>
 </body>
 </html>

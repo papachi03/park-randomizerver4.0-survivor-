@@ -15,30 +15,89 @@
       color: #fff;
       text-shadow: 1px 1px 2px #000;
     }
-    .perk-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 30px;
-    }
-    .perk {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 10px;
-      margin: 10px;
-      width: 200px;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-      background-color: rgba(0, 0, 0, 0.6);
-      color: #fff;
-    }
-    .perk-name {
-      font-weight: bold;
-      margin: 10px 0 5px;
-    }
-    .perk-desc {
-      font-size: 14px;
-    }
-    button {
+.perk-container{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:30px;
+}
+
+.perk{
+  width:220px;
+  height:190px;
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:12px;
+  padding:12px;
+  margin:6px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.35);
+  background-color:rgba(0,0,0,0.72);
+  color:#fff;
+  box-sizing:border-box;
+  display:grid;
+  grid-template-rows:96px 52px auto;
+  justify-items:center;
+  align-items:start;
+  overflow:hidden;
+  min-height:0;
+  cursor:pointer;
+  transition:height 0.22s ease, transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.perk img{
+  width:96px;
+  height:96px;
+  object-fit:contain;
+  margin-bottom:10px;
+}
+
+.perk-name{
+  width:100%;
+  font-size:18px;
+  font-weight:bold;
+  line-height:1.35;
+  text-align:center;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.perk-desc{
+  width:100%;
+  font-size:14px;
+  line-height:1.5;
+  text-align:left;
+  margin-top:8px;
+  max-height:0;
+  opacity:0;
+  overflow-y:auto;
+  padding-right:4px;
+  transition:max-height 0.22s ease, opacity 0.18s ease;
+  min-height:0;
+}
+
+.perk.expanded{
+  height:360px;
+}
+
+.perk.expanded .perk-desc{
+  max-height:140px;
+  opacity:1;
+}
+
+/* シャッフル中は説明を完全に隠す */
+.perk-container.spinning .perk{
+  height:190px;
+  grid-template-rows:96px 52px 0fr;
+}
+
+.perk-container.spinning .perk-desc{
+  max-height:0 !important;
+  opacity:0 !important;
+  overflow:hidden;
+}    button {
       padding: 10px 20px;
       font-size: 18px;
       margin: 10px;
@@ -77,7 +136,242 @@
       color: #fff;
       outline: none;
     }
-  </style>
+.mode-switch{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:10px 0 20px;
+  flex-wrap:wrap;
+}
+
+.mode-btn{
+  padding:10px 18px;
+  font-size:16px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+}
+
+.mode-btn.active{
+  background:rgba(255,255,255,0.35);
+  font-weight:bold;
+}
+
+.control-area{
+  margin-top:18px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.control-btn{
+  padding:12px 22px;
+  font-size:18px;
+  margin:6px;
+  cursor:pointer;
+  border:none;
+  border-radius:10px;
+  background:rgba(0,0,0,0.55);
+  color:#fff;
+  box-shadow:0 4px 10px rgba(0,0,0,0.25);
+}
+
+.control-btn:hover{
+  background:rgba(255,255,255,0.15);
+}
+
+.status-badge{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(0,0,0,0.45);
+  border:1px solid rgba(255,255,255,0.15);
+  font-size:13px;
+}
+
+.perk-container{
+  gap:14px;
+}
+
+.perk{
+  width:220px;
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:12px;
+  padding:12px;
+  margin:6px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.35);
+  background-color:rgba(0,0,0,0.72);
+}
+
+.perk img{
+  width:96px;
+  height:96px;
+  object-fit:contain;
+  margin-bottom:12px;
+}
+
+.perk-name{
+  font-size:18px;
+  font-weight:bold;
+  margin:10px 0 6px;
+}
+
+.perk-desc{
+  font-size:15px;
+  line-height:1.6;
+}
+
+.result-area{
+  margin-top:22px;
+}
+
+#resultText{
+  width:min(920px, 92vw);
+  padding:12px;
+  font-size:16px;
+  border-radius:8px;
+}
+
+.selected-perks{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:24px;
+}
+
+.selected-card{
+  width:220px;
+  background:rgba(0,0,0,0.78);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.35);
+}
+
+.selected-card img{
+  width:72px;
+  height:72px;
+  object-fit:contain;
+  margin-bottom:8px;
+}
+
+.selected-card .name{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.selected-card .desc{
+  font-size:14px;
+  line-height:1.5;
+}
+
+.history-area{
+  margin-top:24px;
+}
+
+.history-title{
+  font-size:16px;
+  margin-bottom:10px;
+}
+
+.history-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:center;
+}
+
+.history-item{
+  width:min(920px, 92vw);
+  background:rgba(0,0,0,0.45);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:8px;
+  padding:10px 12px;
+  font-size:14px;
+  text-align:left;
+}
+
+@media (max-width: 768px){
+  body{
+    padding:20px 12px;
+  }
+
+  .control-btn,
+  .mode-btn{
+    width:100%;
+    max-width:360px;
+  }
+
+  .perk,
+  .selected-card{
+    width:min(92vw, 360px);
+  }
+}
+.perk.special-glow{
+  animation: specialGlow 0.9s ease-in-out infinite alternate;
+  border:2px solid #ffd700;
+  box-shadow:
+    0 0 12px rgba(255,215,0,0.7),
+    0 0 25px rgba(255,140,0,0.5),
+    0 0 40px rgba(255,60,0,0.4);
+}
+
+@keyframes specialGlow{
+  from{
+    transform:scale(1);
+    filter:brightness(1);
+  }
+  to{
+    transform:scale(1.05);
+    filter:brightness(1.4);
+  }
+}
+.perk.locked{
+  transform: scale(1.02);
+  border-color: rgba(255,255,255,0.45);
+  box-shadow: 0 0 20px rgba(255,255,255,0.12);
+}
+.title-bar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:8px;
+}
+
+.title-bar h1{
+  margin:0;
+}
+
+.title-sound-controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.mini-sound-btn{
+  padding:8px 12px;
+  font-size:13px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+  background:rgba(0,0,0,0.55);
+  color:#fff;
+  box-shadow:0 4px 10px rgba(0,0,0,0.25);
+  margin:0;   /* ←追加 */
+}
+
+.mini-sound-btn:hover{
+  background:rgba(255,255,255,0.15);
+}
+</style>
 </head>
 
 <body>
@@ -93,7 +387,18 @@
 <!-- ストップ音 -->
 <audio id="stopSound" src="SE2.mp3"></audio>  <div>
 
-<h1>DBD Park Randomizer ver4.0(survivor)</h1>
+<div class="title-bar">
+  <h1>DBD Park Randomizer ver5.0</h1>
+
+  <div class="title-sound-controls">
+    <button class="mini-sound-btn" onclick="toggleBgm()" id="bgmBtn">🎵 BGM ON</button>
+    <button class="mini-sound-btn" onclick="toggleSe()" id="seBtn">🔔 SE ON</button>
+  </div>
+</div>
+
+<div class="mode-switch">
+  <button class="mode-btn" onclick="goToKillerPage()">キラー用</button>
+</div>
 
 <div class="creator">
   Created by
@@ -102,14 +407,22 @@
   </a>
 </div>
 
-    <button onclick="startShuffle()">スタート</button>
-    <button onclick="stopShuffle()">ストップ</button>
-    <button onclick="location.href='index_kpark.html'">キラー用に変更</button>
-  </div>
+<div class="status-badge" id="shuffleStatus">待機中</div>
+
+<div class="control-area">
+  <button class="control-btn" onclick="startShuffle()">スタート</button>
+  <button class="control-btn" onclick="stopShuffle()">ストップ</button>
+</div>
  <div class="perk-container" id="perkContainer"></div>
+
 <div class="result-area">
   <input id="resultText" type="text" readonly placeholder="ストップするとここに4つのパーク名が出ます">
-  <button onclick="copyResult()">コピー</button>
+  <button class="control-btn" onclick="copyResult()">コピー</button>
+</div>
+
+<div class="history-area">
+  <div class="history-title">履歴（最新3件）</div>
+  <div id="historyList" class="history-list"></div>
 </div>
 
   <script>
@@ -1157,100 +1470,286 @@
 
     ];
 
-    let shuffleInterval = null;
-    let isShuffling = false;
+function isSpecialPerk(park) {
+  const name = park.name.trim();
+  return name === "パークなし" || name === "パーク自由";
+}
 
-    function getRandomParks() {
-      const shuffled = [...allParks].sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, 4);
+const SPECIAL_PERK_NAMES = ["パークなし", "パーク自由"];
+
+let shuffleInterval = null;
+let isShuffling = false;
+let isStopping = false;
+let bgmEnabled = true;
+let seEnabled = true;
+let resultHistory = [];
+let currentPreviewParks = [];
+
+function isSpecialPerk(park) {
+  const name = (park.name || "").trim();
+  return SPECIAL_PERK_NAMES.includes(name);
+}
+
+function getRandomParks() {
+  const shuffled = [...allParks].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, 4);
+}
+
+function renderParks(parks, lockedCount = 0, spinning = false) {
+  const container = document.getElementById("perkContainer");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (spinning) {
+    container.classList.add("spinning");
+  } else {
+    container.classList.remove("spinning");
+  }
+
+  parks.forEach((park, index) => {
+    const div = document.createElement("div");
+    div.className = "perk";
+
+    if (index < lockedCount) {
+      div.classList.add("locked");
     }
 
-    function renderParks(parks) {
-      const container = document.getElementById('perkContainer');
-      container.innerHTML = '';
-      parks.forEach(park => {
-        const div = document.createElement('div');
-        div.className = 'perk';
-        div.innerHTML = `
-          <img src="${park.icon}" alt="${park.name}" style="width:96px;height:96px;margin-bottom:12px;">
-          <div class="perk-name">${park.name}</div>
-          <div class="perk-desc">${park.description}</div>
-        `;
-        container.appendChild(div);
+    if (isSpecialPerk && isSpecialPerk(park)) {
+      div.classList.add("special-glow");
+    }
+
+    div.innerHTML = `
+      <img src="${park.icon}" alt="${park.name}">
+      <div class="perk-name">${park.name}</div>
+      <div class="perk-desc">${park.description}</div>
+    `;
+
+    if (!spinning) {
+      div.addEventListener("click", () => {
+        const allCards = container.querySelectorAll(".perk");
+        allCards.forEach(card => {
+          if (card !== div) card.classList.remove("expanded");
+        });
+        div.classList.toggle("expanded");
       });
     }
 
-    function startShuffle() {
-      if (isShuffling) return;
-      isShuffling = true;
+    container.appendChild(div);
+  });
+}
 
-      if (startSound) {
-        startSound.currentTime = 0;
-        startSound.play().catch(() => {});
+function updateHistory(text) {
+  if (!text) return;
+
+  resultHistory.unshift(text);
+  resultHistory = resultHistory.slice(0, 3);
+
+  const historyList = document.getElementById("historyList");
+  if (!historyList) return;
+
+  historyList.innerHTML = "";
+
+  resultHistory.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "history-item";
+    div.textContent = item;
+    historyList.appendChild(div);
+  });
+}
+
+function setStatus(text) {
+  const el = document.getElementById("shuffleStatus");
+  if (el) el.textContent = text;
+}
+
+function playStartSe() {
+  if (!seEnabled || !startSound) return;
+  startSound.pause();
+  startSound.currentTime = 0;
+  startSound.play().catch(() => {});
+}
+
+function playStopSe() {
+  if (!seEnabled || !stopSound) return;
+  stopSound.pause();
+  stopSound.currentTime = 0;
+  stopSound.play().catch(() => {});
+}
+
+function stopStartSe() {
+  if (!startSound) return;
+  startSound.pause();
+  startSound.currentTime = 0;
+}
+
+function startShuffle() {
+  if (isShuffling || isStopping) return;
+
+  isShuffling = true;
+  setStatus("シャッフル中…");
+  playStartSe();
+
+  currentPreviewParks = getRandomParks();
+  renderParks(currentPreviewParks, 0);
+
+  shuffleInterval = setInterval(() => {
+    currentPreviewParks = getRandomParks();
+    renderParks(currentPreviewParks, 0);
+  }, 90);
+}
+
+async function stopShuffle() {
+  if (!isShuffling || isStopping) return;
+
+  isStopping = true;
+  setStatus("停止演出中…");
+
+  if (shuffleInterval) {
+    clearInterval(shuffleInterval);
+    shuffleInterval = null;
+  }
+
+  const finalParks = getRandomParks();
+  const phaseDurations = [300, 400, 500, 600];
+  let lockedCount = 0;
+
+  for (let i = 0; i < 4; i++) {
+    const duration = phaseDurations[i];
+    const startTime = performance.now();
+
+    while (performance.now() - startTime < duration) {
+      const temp = [...finalParks];
+
+      for (let j = lockedCount; j < 4; j++) {
+        temp[j] = allParks[Math.floor(Math.random() * allParks.length)];
       }
 
-      shuffleInterval = setInterval(() => {
-        const parks = getRandomParks();
-        renderParks(parks);
-      }, 100);
+      renderParks(temp, lockedCount);
+
+      const elapsed = performance.now() - startTime;
+      const progress = elapsed / duration;
+      const delay = 45 + Math.floor(progress * 140);
+
+      await new Promise(resolve => setTimeout(resolve, delay));
     }
 
-    // ★ここが「結果欄に 〇〇、〇〇、〇〇、〇〇 を出す」対応版
-    function stopShuffle() {
-      if (!isShuffling) return;
+    lockedCount++;
+    renderParks(finalParks, lockedCount);
+  }
 
-      clearInterval(shuffleInterval);
-      shuffleInterval = null;
-      isShuffling = false;
+  stopStartSe();
+  playStopSe();
 
-      if (stopSound) {
-        stopSound.currentTime = 0;
-        stopSound.play().catch(() => {});
-      }
+  const perkNames = finalParks.map(park => park.name);
+  const resultText = perkNames.join("、");
 
-      // 表示中の4パーク名を取得して結果欄へ
-      const perkNames = Array.from(document.querySelectorAll(".perk-name"))
-        .map(el => el.textContent.trim())
-        .filter(Boolean);
+  const resultInput = document.getElementById("resultText");
+  if (resultInput) resultInput.value = resultText;
 
-      document.getElementById("resultText").value = perkNames.join("、");
+  updateHistory(resultText);
+  setStatus("停止済み");
+
+  isShuffling = false;
+  isStopping = false;
+  currentPreviewParks = finalParks;
+}
+
+function copyResult() {
+  const input = document.getElementById("resultText");
+  if (!input) return;
+
+  const text = input.value.trim();
+  if (!text) return;
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).catch(() => {});
+    return;
+  }
+
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  input.setSelectionRange(0, 0);
+  input.blur();
+}
+
+function toggleBgm() {
+  bgmEnabled = !bgmEnabled;
+
+  const btn = document.getElementById("bgmBtn");
+  if (btn) btn.textContent = bgmEnabled ? "🎵 BGM ON" : "🎵 BGM OFF";
+
+  if (!bgmEnabled) {
+    fireSound?.pause();
+    bgmSound?.pause();
+  } else {
+    fireSound?.play().catch(() => {});
+    bgmSound?.play().catch(() => {});
+  }
+}
+
+function toggleSe() {
+  seEnabled = !seEnabled;
+
+  const btn = document.getElementById("seBtn");
+  if (btn) btn.textContent = seEnabled ? "🔔 SE ON" : "🔔 SE OFF";
+
+  if (!seEnabled) {
+    if (startSound) {
+      startSound.pause();
+      startSound.currentTime = 0;
     }
-
-    // ★コピー関数
-    function copyResult() {
-      const input = document.getElementById("resultText");
-      const text = input.value.trim();
-      if (!text) return;
-
-      // 新しめブラウザ優先
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).catch(() => {});
-        return;
-      }
-
-      // 互換用
-      input.select();
-      input.setSelectionRange(0, 99999);
-      document.execCommand("copy");
-      input.setSelectionRange(0, 0);
-      input.blur();
+    if (stopSound) {
+      stopSound.pause();
+      stopSound.currentTime = 0;
     }
+  }
+}
 
-    // ===== 音量 + 自動再生制限対策 =====
-    window.addEventListener('DOMContentLoaded', () => {
-      if (fireSound)  fireSound.volume = 0.05;
-      if (bgmSound)   bgmSound.volume  = 0.05;
-      if (startSound) startSound.volume = 0.1;
-      if (stopSound)  stopSound.volume  = 0.1;
+function goToKillerPage() {
+  sessionStorage.setItem("dbd_page_switching", "1");
+  location.href = "index_kpark.html";
+}
 
-      // 最初のユーザー操作で再生
-      const playAudio = () => {
-        fireSound?.play().catch(() => {});
-        bgmSound?.play().catch(() => {});
-        document.removeEventListener('click', playAudio);
-      };
-      document.addEventListener('click', playAudio);
-    });
-  </script>
+function goToSurvivorPage() {
+  sessionStorage.setItem("dbd_page_switching", "1");
+  location.href = "index.html";
+}
+
+function stopAllSounds() {
+  [fireSound, bgmSound, startSound, stopSound].forEach(audio => {
+    if (!audio) return;
+    audio.pause();
+    audio.currentTime = 0;
+  });
+}
+
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const suppressAutoClick = sessionStorage.getItem("dbd_page_switching") === "1";
+  sessionStorage.removeItem("dbd_page_switching");
+
+  stopAllSounds();
+
+  if (fireSound) fireSound.volume = 0.05;
+  if (bgmSound) bgmSound.volume = 0.05;
+  if (startSound) startSound.volume = 0.1;
+  if (stopSound) stopSound.volume = 0.1;
+
+  setStatus("待機中");
+
+  const playAudio = () => {
+    if (bgmEnabled) {
+      fireSound?.play().catch(() => {});
+      bgmSound?.play().catch(() => {});
+    }
+    document.removeEventListener("click", playAudio);
+  };
+
+  document.addEventListener("click", playAudio);
+});
+</script>
 </body>
 </html>
